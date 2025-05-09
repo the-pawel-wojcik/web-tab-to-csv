@@ -2,6 +2,7 @@
 import argparse
 import csv
 import requests
+import sys
 from urllib.parse import urlparse
 
 from bs4 import BeautifulSoup
@@ -23,6 +24,9 @@ def main():
     table = soup.find('table')
 
 	# Extract the table data
+    if table is None:
+        print(f"No table found on the {url}", file=sys.stderr)
+        return 1
     rows = table.find_all('tr')
     data = []
     for row in rows:
